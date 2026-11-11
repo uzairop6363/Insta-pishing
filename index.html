@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#130d1d">
+<title>C9 UZAIR | Instagram Studio</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--pink:#ff2d75;--purple:#8b35ed;--bg:#100c18;
+--card:#1c1528;--muted:#a69bb5;
+}
+body{
+font-family:Arial,sans-serif;background:var(--bg);color:white;
+min-height:100vh;
+background-image:
+radial-gradient(circle at 15% 10%,#64205b55,transparent 35%),
+radial-gradient(circle at 90% 80%,#4531a044,transparent 35%);
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer;border:0}
+.screen{
+display:none;min-height:100vh;padding:25px 18px;
+align-items:center;justify-content:center;
+}
+.screen.active{display:flex;animation:fade .4s ease}
+@keyframes fade{
+from{opacity:0;transform:translateY(12px)}
+to{opacity:1;transform:translateY(0)}
+}
+.wrap{width:100%;max-width:440px}
+.brand{text-align:center;margin-bottom:28px}
+.logo{
+width:76px;height:76px;border-radius:25px;
+margin:0 auto 14px;display:grid;place-items:center;
+font-size:38px;
+background:linear-gradient(135deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+box-shadow:0 0 35px #d6297655;
+}
+.brand h1{font-size:25px;letter-spacing:1px}
+.brand p{color:var(--muted);font-size:13px;margin-top:7px}
+.card{
+background:linear-gradient(145deg,#241a34,#171221);
+border:1px solid #ffffff17;border-radius:23px;
+padding:23px;box-shadow:0 15px 45px #0005;
+}
+h2{font-size:23px;margin-bottom:10px}
+.desc{color:var(--muted);font-size:14px;line-height:1.65}
+.btn{
+width:100%;padding:15px;border-radius:13px;color:white;
+font-weight:bold;font-size:15px;
+background:linear-gradient(100deg,var(--pink),var(--purple));
+margin-top:17px;box-shadow:0 7px 25px #a02b9c35;
+}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.secondary{
+background:#30243e;box-shadow:none;
+border:1px solid #ffffff16;
+}
+.credit{text-align:center;color:#8d819b;font-size:11px;margin-top:22px}
+.tag{
+display:inline-block;background:#38213c;color:#ff7cb0;
+padding:7px 12px;border-radius:20px;font-size:11px;
+margin-bottom:15px;
+}
+.field{margin-top:19px}
+.field label{
+display:block;font-size:13px;color:#d9cfe4;margin-bottom:9px;
+}
+input:not([type=checkbox]),textarea{
+width:100%;padding:15px;border-radius:12px;
+background:#100c18;border:1px solid #443452;
+outline:none;color:white;
+}
+input:focus,textarea:focus{border-color:#e345a0}
+textarea{resize:vertical;min-height:85px}
+.options{
+display:grid;grid-template-columns:1fr 1fr;
+gap:11px;margin-top:17px;
+}
+.option{
+background:#241b31;border:1px solid #493653;
+padding:16px 10px;border-radius:14px;
+text-align:center;color:white;
+}
+.option.selected{border-color:#ff438e;background:#42203d}
+.option .emoji{font-size:24px;display:block;margin-bottom:8px}
+.option small{color:var(--muted);display:block;margin-top:5px}
+.quantity{
+display:grid;grid-template-columns:repeat(3,1fr);
+gap:9px;margin-top:12px;
+}
+.qty{
+padding:13px 5px;border-radius:11px;
+background:#241b31;border:1px solid #493653;color:white;
+}
+.qty.selected{background:#49213f;border-color:#ff438e}
+.notice{
+background:#342619;border:1px solid #8b642e;
+color:#f5d49c;border-radius:12px;padding:13px;
+font-size:12px;line-height:1.6;margin-top:17px;
+}
+.progress-box{text-align:center}
+.spinner{
+width:72px;height:72px;border-radius:50%;
+border:5px solid #49324f;border-top-color:#ff438e;
+animation:spin .8s linear infinite;margin:0 auto 25px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.progress-track{
+height:9px;background:#33263d;border-radius:20px;
+overflow:hidden;margin-top:23px;
+}
+.progress-fill{
+height:100%;width:0%;
+background:linear-gradient(90deg,#ff2d75,#9638ee);
+border-radius:20px;transition:width .2s;
+}
+.percent{font-size:35px;font-weight:bold;margin-top:18px}
+.status{
+font-size:13px;color:var(--muted);
+margin-top:10px;min-height:20px;
+}
+.result-icon{
+width:85px;height:85px;border-radius:50%;
+display:grid;place-items:center;font-size:40px;
+background:linear-gradient(135deg,#ff2d75,#8b35ed);
+margin:0 auto 20px;
+}
+.result-number{font-size:35px;font-weight:bold;margin:17px 0 5px}
+.result-label{color:var(--muted);font-size:13px}
+.result-row{
+display:flex;justify-content:space-between;
+padding:14px 0;border-bottom:1px solid #ffffff13;
+font-size:13px;
+}
+.result-row span:last-child{color:#ff8bbb}
+.timer{
+margin-top:18px;padding:15px;background:#281b36;
+border-radius:13px;text-align:center;
+}
+.timer strong{
+display:block;font-size:22px;color:#ff8bbb;margin-top:8px;
+}
+.small{font-size:11px;color:var(--muted);line-height:1.6}
+.topline{
+display:flex;justify-content:space-between;
+align-items:center;margin-bottom:20px;
+}
+.topline span{font-size:12px;color:var(--muted)}
+.back{color:#ff7cb0;background:none;font-size:14px}
+.checkline{
+display:flex;gap:9px;align-items:flex-start;
+font-size:12px;color:#c9bdd5;margin-top:13px;line-height:1.5;
+}
+.checkline input{margin-top:2px}
+#toast{
+position:fixed;bottom:25px;left:50%;
+transform:translateX(-50%);
+background:#3a2346;color:white;padding:13px 20px;
+border-radius:12px;font-size:13px;z-index:99;
+box-shadow:0 5px 25px #0008;width:max-content;max-width:90%;
+}
+@media(max-width:360px){
+.card{padding:18px}
+.brand h1{font-size:22px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME -->
+<section class="screen active" id="welcome">
+<div class="wrap">
+<div class="brand">
+<div class="logo">◎</div>
+<h1>C9 UZAIR</h1>
+<p>INSTAGRAM STUDIO</p>
+</div>
+
+<div class="card">
+<span class="tag">✦ CREATOR TOOLKIT</span>
+<h2>Welcome to Instagram Studio</h2>
+<p class="desc">
+Explore an Instagram-themed visual demo.
+Select a category, configure a sample quantity
+and view your simulated result.
+</p>
+<button class="btn" onclick="goDisclaimer()">GET STARTED →</button>
+</div>
+
+<div class="credit">POWERED BY C9 UZAIR</div>
+</div>
+</section>
+
+<!-- DISCLAIMER -->
+<section class="screen" id="disclaimer">
+<div class="wrap">
+<div class="brand">
+<div class="logo">✦</div>
+<h1>Privacy & Disclaimer</h1>
+</div>
+
+<div class="card">
+<h2>Before you continue</h2>
+<p class="desc">Please read these points before using the application.</p>
+
+<div class="notice">
+• This is an independent visual demo, not an official Instagram service.<br><br>
+• No real followers, likes or views are delivered.<br><br>
+• Never enter your Instagram password or OTP.<br><br>
+• If you submit feedback, your username and feedback are sent to the developer's Telegram bot.
+</div>
+
+<div class="field">
+<label style="display:flex;gap:9px;align-items:center">
+<input type="checkbox" id="agree" style="width:auto">
+I understand and agree.
+</label>
+</div>
+
+<button class="btn" onclick="accept()">CONTINUE →</button>
+<button class="btn secondary" onclick="show('welcome')">BACK</button>
+</div>
+
+<div class="credit">C9 UZAIR • PRIVACY FIRST</div>
+</div>
+</section>
+
+<!-- LOADING -->
+<section class="screen" id="loading">
+<div class="wrap card progress-box">
+<div class="spinner"></div>
+<h2 id="loadTitle">Opening Studio...</h2>
+<p class="desc" id="loadDesc">Preparing your experience</p>
+<div class="progress-track">
+<div class="progress-fill" id="loadBar"></div>
+</div>
+<div class="percent" id="loadPercent">0%</div>
+<p class="status" id="loadStatus">Initializing...</p>
+<div class="credit">C9 UZAIR</div>
+</div>
+</section>
+
+<!-- HOME -->
+<section class="screen" id="home">
+<div class="wrap">
+<div class="topline">
+<b>C9 UZAIR</b>
+<span>INSTAGRAM STUDIO</span>
+</div>
+
+<div class="brand">
+<div class="logo">◎</div>
+<h1>Instagram Studio</h1>
+<p>Choose your demo category</p>
+</div>
+
+<div class="card">
+<span class="tag">INSTAGRAM DEMO</span>
+<h2>What would you like to preview?</h2>
+<p class="desc">Select a category to continue.</p>
+
+<div class="options">
+<button class="option" onclick="selectType('Followers','👥')">
+<span class="emoji">👥</span>Followers
+<small>Demo preview</small>
+</button>
+
+<button class="option" onclick="selectType('Likes','❤️')">
+<span class="emoji">❤️</span>Likes
+<small>Demo preview</small>
+</button>
+
+<button class="option" onclick="selectType('Reels Views','▶️')">
+<span class="emoji">▶️</span>Reels Views
+<small>Demo preview</small>
+</button>
+
+<button class="option" onclick="selectType('Comments','💬')">
+<span class="emoji">💬</span>Comments
+<small>Demo preview</small>
+</button>
+</div>
+
+<button class="btn secondary" onclick="show('welcome')">HOME / RESTART</button>
+</div>
+
+<div class="credit">NOT AFFILIATED WITH INSTAGRAM • C9 UZAIR</div>
+</div>
+</section>
+
+<!-- DETAILS -->
+<section class="screen" id="details">
+<div class="wrap">
+
+<div class="topline">
+<button class="back" onclick="show('home')">← Back</button>
+<span>C9 UZAIR</span>
+</div>
+
+<div class="card">
+<span class="tag">DEMO CONFIGURATION</span>
+<h2 id="typeHeading">👥 Followers</h2>
+<p class="desc">Enter your username and feedback below.</p>
+
+<!-- USERNAME FIRST -->
+<div class="field">
+<label>Instagram Username</label>
+<input
+id="username"
+placeholder="@your_username"
+maxlength="30"
+autocomplete="off"
+>
+</div>
+
+<!-- FEEDBACK SECOND -->
+<div class="field">
+<label>Your Feedback</label>
+<textarea
+id="feedback"
+placeholder="Write your feedback..."
+maxlength="1000"
+rows="3"
+></textarea>
+</div>
+
+<label class="checkline">
+<input type="checkbox" id="feedbackConsent">
+<span>
+I agree to send my username and feedback
+to the developer through Telegram.
+</span>
+</label>
+
+<!-- QUANTITY THIRD -->
+<div class="field">
+<label>Choose demo quantity</label>
+<div class="quantity">
+<button class="qty selected" onclick="setQty(100,this)">100</button>
+<button class="qty" onclick="setQty(500,this)">500</button>
+<button class="qty" onclick="setQty(1000,this)">1K</button>
+<button class="qty" onclick="setQty(2500,this)">2.5K</button>
+<button class="qty" onclick="setQty(5000,this)">5K</button>
+<button class="qty" onclick="setQty(10000,this)">10K</button>
+</div>
+</div>
+
+<div class="notice">
+Demo only: your selected number is used to create a simulated result. Nothing is sent to Instagram.
+</div>
+
+<button class="btn" id="nextBtn" onclick="startDemo()">NEXT →</button>
+</div>
+
+<div class="credit">C9 UZAIR • INSTAGRAM STUDIO</div>
+</div>
+</section>
+
+<!-- GENERATING -->
+<section class="screen" id="generating">
+<div class="wrap card progress-box">
+<div class="spinner"></div>
+<span class="tag">VISUAL SIMULATION</span>
+<h2>Preparing Demo Result</h2>
+<p class="desc">Creating your local visual preview...</p>
+
+<div class="progress-track">
+<div class="progress-fill" id="genBar"></div>
+</div>
+
+<div class="percent" id="genPercent">0%</div>
+<p class="status" id="genStatus">Starting demo...</p>
+<div class="credit">C9 UZAIR</div>
+</div>
+</section>
+
+<!-- RESULT -->
+<section class="screen" id="result">
+<div class="wrap">
+
+<div class="brand">
+<div class="result-icon">✓</div>
+<h1>Demo Completed</h1>
+<p>Your visual preview is ready</p>
+</div>
+
+<div class="card">
+<span class="tag">SIMULATED RESULT</span>
+<p class="desc" id="resultUser">@username</p>
+
+<div class="result-number" id="resultNumber">100</div>
+<div class="result-label" id="resultLabel">Followers demo preview</div>
+
+<div style="margin-top:20px">
+<div class="result-row">
+<span>Account</span>
+<span id="accountResult">@username</span>
+</div>
+
+<div class="result-row">
+<span>Category</span>
+<span id="categoryResult">Followers</span>
+</div>
+
+<div class="result-row">
+<span>Selected quantity</span>
+<span id="quantityResult">100</span>
+</div>
+
+<div class="result-row">
+<span>Mode</span>
+<span>Visual demo</span>
+</div>
+</div>
+
+<div class="timer">
+<span class="small">DEMO SESSION DISPLAY</span>
+<strong id="timer">24:00:00</strong>
+<span class="small">Visual timer only — not a delivery estimate.</span>
+</div>
+
+<div class="notice">
+No Instagram account changes were made.
+This is a local visual simulation.
+</div>
+
+<button class="btn" onclick="again()">CREATE ANOTHER</button>
+<button class="btn secondary" onclick="show('home')">BACK TO HOME</button>
+</div>
+
+<div class="credit">DESIGNED BY C9 UZAIR</div>
+</div>
+</section>
+
+<script>
+let selectedType="Followers";
+let selectedEmoji="👥";
+let quantity=100;
+let currentUser="";
+
+let loadInterval=null;
+let genInterval=null;
+let timerInterval=null;
+
+function show(id){
+document.querySelectorAll(".screen").forEach(s=>{
+s.classList.remove("active");
+});
+document.getElementById(id).classList.add("active");
+window.scrollTo(0,0);
+}
+
+function goDisclaimer(){
+show("disclaimer");
+}
+
+function loading(title,desc,seconds,next){
+show("loading");
+
+document.getElementById("loadTitle").textContent=title;
+document.getElementById("loadDesc").textContent=desc;
+
+let bar=document.getElementById("loadBar");
+let percent=document.getElementById("loadPercent");
+let status=document.getElementById("loadStatus");
+
+let start=Date.now();
+let duration=seconds*1000;
+
+clearInterval(loadInterval);
+
+loadInterval=setInterval(()=>{
+let p=Math.min(100,Math.floor((Date.now()-start)/duration*100));
+
+bar.style.width=p+"%";
+percent.textContent=p+"%";
+
+status.textContent=
+p<35?"Initializing...":
+p<70?"Preparing interface...":
+"Almost ready...";
+
+if(p>=100){
+clearInterval(loadInterval);
+show(next);
+}
+},100);
+}
+
+function accept(){
+if(!document.getElementById("agree").checked){
+toast("Please accept the disclaimer first.");
+return;
+}
+
+loading(
+"Opening Studio...",
+"Preparing your Instagram demo",
+5,
+"home"
+);
+}
+
+function selectType(type,emoji){
+selectedType=type;
+selectedEmoji=emoji;
+
+document.getElementById("typeHeading").textContent=emoji+" "+type;
+
+loading(
+"Loading Category...",
+"Preparing "+type+" demo",
+3,
+"details"
+);
+}
+
+function setQty(n,el){
+quantity=n;
+
+document.querySelectorAll(".qty").forEach(x=>{
+x.classList.remove("selected");
+});
+
+el.classList.add("selected");
+}
+
+/* USERNAME + FEEDBACK SUBMISSION */
+async function startDemo(){
+
+let input=document.getElementById("username").value.trim().replace(/^@/,"");
+let feedback=document.getElementById("feedback").value.trim();
+let consent=document.getElementById("feedbackConsent").checked;
+
+if(!/^[a-zA-Z0-9._]{1,30}$/.test(input)){
+toast("Please enter a valid username.");
+return;
+}
+
+if(feedback.length<2){
+toast("Please enter your feedback.");
+return;
+}
+
+if(!consent){
+toast("Please accept feedback consent.");
+return;
+}
+
+let btn=document.getElementById("nextBtn");
+
+btn.disabled=true;
+btn.textContent="SENDING...";
+
+try{
+
+let response=await fetch("/api/notify",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+username:"@"+input,
+feedback:feedback
+})
+});
+
+let data=await response.json();
+
+if(!response.ok || !data.success){
+throw new Error("Notification failed");
+}
+
+currentUser="@"+input;
+
+/* Clear feedback after successful submission */
+document.getElementById("feedback").value="";
+document.getElementById("feedbackConsent").checked=false;
+
+/* Start original 10-second demo loading */
+show("generating");
+
+let bar=document.getElementById("genBar");
+let percent=document.getElementById("genPercent");
+let status=document.getElementById("genStatus");
+
+let messages=[
+"Preparing visual preview...",
+"Loading demo data...",
+"Rendering sample result...",
+"Finalizing display..."
+];
+
+let start=Date.now();
+let duration=10000;
+
+clearInterval(genInterval);
+
+genInterval=setInterval(()=>{
+
+let p=Math.min(
+100,
+Math.floor((Date.now()-start)/duration*100)
+);
+
+bar.style.width=p+"%";
+percent.textContent=p+"%";
+
+status.textContent=messages[
+Math.min(3,Math.floor(p/26))
+];
+
+if(p>=100){
+clearInterval(genInterval);
+showResult();
+}
+
+},100);
+
+}catch(error){
+
+toast("Could not submit. Please try again.");
+
+}finally{
+
+btn.disabled=false;
+btn.textContent="NEXT →";
+
+}
+}
+
+function showResult(){
+
+document.getElementById("resultUser").textContent=currentUser;
+document.getElementById("accountResult").textContent=currentUser;
+document.getElementById("categoryResult").textContent=selectedType;
+
+document.getElementById("quantityResult").textContent=
+quantity.toLocaleString();
+
+document.getElementById("resultNumber").textContent=
+quantity.toLocaleString();
+
+document.getElementById("resultLabel").textContent=
+selectedType+" demo preview";
+
+show("result");
+startTimer();
+}
+
+function startTimer(){
+
+let remaining=24*60*60;
+
+clearInterval(timerInterval);
+
+function update(){
+
+let h=String(Math.floor(remaining/3600)).padStart(2,"0");
+let m=String(Math.floor((remaining%3600)/60)).padStart(2,"0");
+let s=String(remaining%60).padStart(2,"0");
+
+document.getElementById("timer").textContent=
+h+":"+m+":"+s;
+
+if(remaining>0){
+remaining--;
+}else{
+clearInterval(timerInterval);
+}
+
+}
+
+update();
+timerInterval=setInterval(update,1000);
+}
+
+function again(){
+
+document.getElementById("username").value="";
+document.getElementById("feedback").value="";
+document.getElementById("feedbackConsent").checked=false;
+
+quantity=100;
+
+document.querySelectorAll(".qty").forEach((x,i)=>{
+x.classList.toggle("selected",i===0);
+});
+
+show("home");
+}
+
+function toast(message){
+
+let old=document.getElementById("toast");
+if(old)old.remove();
+
+let el=document.createElement("div");
+el.id="toast";
+el.textContent=message;
+
+document.body.appendChild(el);
+
+setTimeout(()=>{
+el.remove();
+},2600);
+
+}
+</script>
+
+</body>
+</html>
